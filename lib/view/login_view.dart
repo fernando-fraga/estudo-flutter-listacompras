@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {
@@ -13,7 +14,8 @@ class _LoginViewState extends State<LoginView> {
   var formKey = GlobalKey<FormState>();
   var username = TextEditingController();
   var password = TextEditingController();
-  
+  bool senhaVisivel = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +32,7 @@ class _LoginViewState extends State<LoginView> {
           child: Column(
             children: [
               Image.asset(
-                'lib/assets/cestocompras.png',
+                'lib/imagens/cestocompras.png',
                 width: 100,
                 height: 100,
               ),
@@ -54,10 +56,17 @@ class _LoginViewState extends State<LoginView> {
               SizedBox(height: 30),
               TextFormField(
                 controller: password,
+                obscureText: senhaVisivel,
                 decoration: InputDecoration(
                   labelText: "Senha",
                   border: OutlineInputBorder(),
-                  prefix: Icon(Icons.password_outlined)
+                  prefix: Icon(Icons.password_outlined),
+                  suffix: ElevatedButton(child: Icon(Icons.visibility), onPressed: () {
+                    setState(() {
+                      senhaVisivel = !senhaVisivel;   
+                    });
+                  },
+                  )
                 ),
                 validator: (value) {
                   if (value == null){
@@ -71,20 +80,29 @@ class _LoginViewState extends State<LoginView> {
                 },
               ),
               SizedBox(height: 30),
-              ElevatedButton(onPressed: () {
-                if (formKey.currentState!.validate()) {
-                  setState(() {
-                    var nome = username.text;
-                    
-                    ScaffoldMessenger.of(context).showSnackBar(
-                    // ignore: unnecessary_brace_in_string_interps
-                    SnackBar(content: Text('Bem vindo ${nome}'),
-                    duration: Duration(seconds: 3),
-                    )
-                  );
-                  });
-                }
-              }, child: Text('Login')
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      setState(() {
+                        var nome = username.text;
+                        
+                        ScaffoldMessenger.of(context).showSnackBar(
+                        // ignore: unnecessary_brace_in_string_interps
+                        SnackBar(content: Text('Bem vindo ${nome}'),
+                        duration: Duration(seconds: 3),
+                        )
+                      );
+                      });
+                    }
+                  }, child: Text('Login')
+                  ),
+                  ElevatedButton(onPressed: () {
+                    Navigator.pushNamed(context, 'signup');
+                  }, child: Text('Registre-se')
+                  ),
+                ],
               )
             ],),
           ),
