@@ -119,6 +119,7 @@ var formKey = GlobalKey<FormState>();
                         )
                       );
                       });
+                      Navigator.pushNamed(context, 'login');
                     }
                   }, child: Text('Cadastrar')
                   ),

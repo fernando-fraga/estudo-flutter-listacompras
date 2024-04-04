@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:lista_compras/view/gerenciar_view.dart';
+import 'package:lista_compras/view/recovery_view.dart';
 import 'package:lista_compras/view/signup_view.dart';
 
 import 'view/login_view.dart';
@@ -26,6 +28,8 @@ class MainApp extends StatelessWidget {
       routes: {
         'login': (context) => LoginView(),
         'signup': (context) => SignUpView(),
+        'recovery': (context) => RecoveryView(),
+        'gerenciar': (context) => GerenciarView(),
       },
     );
   }

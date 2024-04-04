@@ -80,9 +80,6 @@ class _LoginViewState extends State<LoginView> {
                 },
               ),
               SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
                   ElevatedButton(onPressed: () {
                     if (formKey.currentState!.validate()) {
                       setState(() {
@@ -95,15 +92,23 @@ class _LoginViewState extends State<LoginView> {
                         )
                       );
                       });
+                      Navigator.pushNamed(context, 'gerenciar');
                     }
                   }, child: Text('Login')
                   ),
-                  ElevatedButton(onPressed: () {
-                    Navigator.pushNamed(context, 'signup');
-                  }, child: Text('Registre-se')
-                  ),
-                ],
-              )
+                  SizedBox(height: 30),
+                  Row(
+                    children: [
+                      ElevatedButton(onPressed: () {
+                        Navigator.pushNamed(context, 'signup');
+                      }, child: Text('Registre-se')
+                      ),
+                      ElevatedButton(onPressed: () {
+                        Navigator.pushNamed(context, 'recovery');
+                      }, child: Text('Esqueceu a senha?')
+                      ),
+                    ],
+                  )
             ],),
           ),
         ),
