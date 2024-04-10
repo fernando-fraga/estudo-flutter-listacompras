@@ -12,11 +12,14 @@ class GerenciarView extends StatefulWidget {
 
 class _GerenciarViewState extends State<GerenciarView> {
   List<Lista> listaCompras = [];
+  var nomeLista = TextEditingController();
+  var formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     listaCompras = Lista.preencher();
     super.initState();
+    nomeLista = TextEditingController();
   }
 
 
@@ -57,21 +60,27 @@ class _GerenciarViewState extends State<GerenciarView> {
 
               ),
             );
-          }
+           }
           ),
+          
       ),
 
+      
       floatingActionButton: FloatingActionButton(
         child: Text("+"),
         onPressed: (){
-          setState(() {
-            listaCompras.add(
-              Lista('Lista ${listaCompras.length+1}')
-            );
-          });
-
+          showDialog(context: context, builder: (BuildContext context) => AlertDialog(
+            title: const Text('Criar nova lista'),
+            content: Form(
+              key: formKey,
+              child: TextFormField(
+                
+              ),
+            ),
+          ) );
         },
       ),
+      
     );
   }
 }
