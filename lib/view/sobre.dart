@@ -48,7 +48,7 @@ class _SobreViewState extends State<SobreView> {
                 ),
               ),
               Text(
-                'Seu Nome ou Nome da Empresa',
+                'Fernando Fraga',
                 style: TextStyle(
                   fontSize: 16,
                 ),
@@ -56,9 +56,9 @@ class _SobreViewState extends State<SobreView> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Lógica para ação do botão (pode ser redirecionamento para site, etc.)
+                  // Lógica para ação do botão (redirecionamento para Github)
                 },
-                child: Text('Visite nosso site'),
+                child: Text('Visite meu GitHub'),
               ),
             ],
           ),
