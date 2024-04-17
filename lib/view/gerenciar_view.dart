@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../model/lista.dart';
+import 'gerenciar_itens_view.dart';
 
 class GerenciarView extends StatefulWidget {
   const GerenciarView({super.key});
@@ -102,6 +103,13 @@ class _GerenciarViewState extends State<GerenciarView> {
                   onTap: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(listaCompras[index].nome)));
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GerenciarItensView(listaCompras[index]),
+                      ),
+                    );
                   },
                   hoverColor: Colors.red.shade100,
 
@@ -165,7 +173,8 @@ class _GerenciarViewState extends State<GerenciarView> {
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
                               setState(() {
-                                listaCompras.add(Lista(nome: nomeLista.text));
+                                listaCompras.add(
+                                    Lista(nome: nomeLista.text, itens: []));
                               });
                               Navigator.pop(context, 'Criar');
                             }

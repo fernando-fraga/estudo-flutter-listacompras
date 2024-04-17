@@ -2,6 +2,7 @@ class Produtos {
  String nomeProduto;
  int quantidade;
  bool isChecked;
+  
 
  Produtos({required this.nomeProduto, required this.quantidade, this.isChecked = false});
 
