@@ -15,15 +15,15 @@ class _SobreViewState extends State<SobreView> {
   // Método para abrir o link do GitHub
   _launchGitHubURL() async {
     const url = 'https://github.com/fernando-fraga'; 
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
     } else {
       throw 'Não foi possível abrir o link $url';
     }
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+return Scaffold(
       appBar: AppBar(
         title: Text('Sobre'),
         backgroundColor: Colors.blueGrey.shade100,
@@ -65,11 +65,28 @@ class _SobreViewState extends State<SobreView> {
                 ),
               ),
               SizedBox(height: 20),
-              ElevatedButton(
+              ElevatedButton.icon(
                 onPressed: () {
-                    _launchGitHubURL;
+                  _launchGitHubURL();
                 },
-                child: Text('Visite meu GitHub'),
+                icon: Icon(Icons.open_in_browser),
+                label: Text('Visite meu GitHub'),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white, backgroundColor: Colors.blue, // text color
+                  elevation: 5, // shadow elevation
+                ),
+              ),
+              SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Voltar'),
+                style: TextButton.styleFrom(
+                  textStyle: TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
               ),
             ],
           ),

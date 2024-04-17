@@ -14,18 +14,23 @@ class GerenciarItensView extends StatefulWidget {
 class _GerenciarItensViewState extends State<GerenciarItensView> {
   late TextEditingController _nomeProdutoController;
   late TextEditingController _quantidadeController;
+  late TextEditingController _searchController;
+  List<Produtos> _filteredItems = [];
 
   @override
   void initState() {
     super.initState();
     _nomeProdutoController = TextEditingController();
     _quantidadeController = TextEditingController();
+    _searchController = TextEditingController();
+    _filteredItems.addAll(widget.lista.itens);
   }
 
   @override
   void dispose() {
     _nomeProdutoController.dispose();
     _quantidadeController.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -135,11 +140,48 @@ class _GerenciarItensViewState extends State<GerenciarItensView> {
     );
   }
 
+  _filterItems(String query) {
+    List<Produtos> filteredList = [];
+    filteredList.addAll(widget.lista.itens);
+    if (query.isNotEmpty) {
+      filteredList.retainWhere((item) =>
+          item.nomeProduto.toLowerCase().contains(query.toLowerCase()));
+    }
+    setState(() {
+      _filteredItems.clear();
+      _filteredItems.addAll(filteredList);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.lista.nome),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Pesquisar'),
+                    content: TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        hintText: 'Pesquisar...',
+                      ),
+                      onChanged: (value) {
+                        _filterItems(value);
+                      },
+                    ),
+                  );
+                },
+              );
+            },
+            icon: Icon(Icons.search),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.plus_one),
@@ -154,32 +196,37 @@ class _GerenciarItensViewState extends State<GerenciarItensView> {
       body: ListView.builder(
         itemCount: widget.lista.itens.length,
         itemBuilder: ((context, index) {
-          return ListTile(
-            title: Row(
-              children: [
-                Checkbox(
-                  value: widget.lista.itens[index].isChecked,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      widget.lista.itens[index].isChecked = value!;
-                    });
-                  },
-                ),
-                Expanded(
-                  child: Text(
-                    '${widget.lista.itens[index].nomeProduto} - Quantidade: ${widget.lista.itens[index].quantidade}',
+          // Verifica se o item deve ser exibido com base na pesquisa
+          if (_searchController.text.isEmpty ||
+              widget.lista.itens[index].nomeProduto
+                  .toLowerCase()
+                  .contains(_searchController.text.toLowerCase())) {
+            return ListTile(
+              title: Row(
+                children: [
+                  Checkbox(
+                    value: widget.lista.itens[index].isChecked,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        widget.lista.itens[index].isChecked = value!;
+                      });
+                    },
                   ),
-                ),
-              ],
-            ),
-            onLongPress: () {
-              _editarItem(index);
-            },
-          );
-          // return ListTile(
-          //   title: Text(
-          //       '${widget.lista.itens[index].nomeProduto} - Quantidade: ${widget.lista.itens[index].quantidade}, Checked: ${widget.lista.itens[index].isChecked}'),
-          // );
+                  Expanded(
+                    child: Text(
+                      '${widget.lista.itens[index].nomeProduto} - Quantidade: ${widget.lista.itens[index].quantidade}',
+                    ),
+                  ),
+                ],
+              ),
+              onLongPress: () {
+                _editarItem(index);
+              },
+            );
+          } else {
+            return SizedBox
+                .shrink(); // Retorna um widget vazio para itens filtrados
+          }
         }),
       ),
     );
