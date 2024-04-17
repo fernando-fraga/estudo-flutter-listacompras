@@ -1,16 +1,15 @@
 class Lista {
   String nome;
- // String quantidade;
 
-  Lista(this.nome);
+  Lista({required this.nome});
 
 
   static List<Lista> preencher() {
     List<Lista> listaCompras = [];
 
-    listaCompras.add(Lista('Lista 1'));
-    listaCompras.add(Lista('Lista 2'));
-    listaCompras.add(Lista('Lista 3'));
+    listaCompras.add(Lista(nome:'Lista 1'));
+    listaCompras.add(Lista(nome:'Lista 2'));
+    listaCompras.add(Lista(nome:'Lista 3'));
 
     return listaCompras;
   }

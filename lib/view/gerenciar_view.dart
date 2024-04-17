@@ -64,7 +64,24 @@ class _GerenciarViewState extends State<GerenciarView> {
           ),
           
       ),
-
+      bottomNavigationBar: BottomAppBar(
+        child: Padding(
+          padding: EdgeInsets.only(right: 16, bottom: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              OutlinedButton(onPressed: () {
+                Navigator.pushNamed(context, 'sobre');
+              }, child: Text('Sobre')
+            ),
+            OutlinedButton(onPressed: () {
+              Navigator.pushNamed(context, 'login');
+              }, child: Text('Sair')
+            )
+            ],
+          ),
+        )
+      ),
       
       floatingActionButton: FloatingActionButton(
         child: Text("+"),
@@ -74,9 +91,38 @@ class _GerenciarViewState extends State<GerenciarView> {
             content: Form(
               key: formKey,
               child: TextFormField(
-                
+                controller: nomeLista,
+                decoration: InputDecoration(
+                  labelText: 'Informe o nome da lista'
+                ),
+                validator: (value) {
+                  if (value == null) {
+                    return 'Insira o nome da lista';
+                  }
+                  else if (value.isEmpty) {
+                    return 'Insira o nome da lista';
+                  }
+                  return null;
+                },
               ),
             ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'Cancelar'), 
+                child: const Text('Cancelar')
+              ),
+               TextButton(
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    setState(() {
+                      listaCompras.add(Lista(nome: nomeLista.text));
+                    });
+                    Navigator.pop(context, 'Criar');
+                  }
+                }, 
+                child: const Text('Criar')
+              )
+            ],
           ) );
         },
       ),

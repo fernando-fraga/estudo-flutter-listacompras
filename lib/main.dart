@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lista_compras/view/gerenciar_view.dart';
 import 'package:lista_compras/view/recovery_view.dart';
 import 'package:lista_compras/view/signup_view.dart';
+import 'package:lista_compras/view/sobre_view.dart';
 
 import 'view/login_view.dart';
 
@@ -30,6 +31,7 @@ class MainApp extends StatelessWidget {
         'signup': (context) => SignUpView(),
         'recovery': (context) => RecoveryView(),
         'gerenciar': (context) => GerenciarView(),
+        'sobre': (context) => SobreView(),
       },
     );
   }
